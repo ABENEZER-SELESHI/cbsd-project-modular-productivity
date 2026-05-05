@@ -1,4 +1,4 @@
-const { randomUUID } = require('crypto');
+const { generateId } = require('@repo/utils');
 
 /**
  * Create a new Habit object.
@@ -8,7 +8,7 @@ const { randomUUID } = require('crypto');
  */
 function createHabit(name, frequency = 'daily') {
   return {
-    id: randomUUID(),
+    id: generateId(),
     name,
     frequency,
     streak: 0,
@@ -26,7 +26,7 @@ function createHabit(name, frequency = 'daily') {
  */
 function createNote(title, content = '') {
   return {
-    id: randomUUID(),
+    id: generateId(),
     title,
     content,
     createdAt: new Date().toISOString(),

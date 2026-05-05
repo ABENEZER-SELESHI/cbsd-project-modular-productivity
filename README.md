@@ -56,15 +56,15 @@ npm run build
 |--------|-------------------|-------------------|
 | GET    | /api/tasks        | List tasks        |
 | POST   | /api/tasks        | Create task       |
-| PATCH  | /api/tasks/:id    | Update task       |
+| PUT    | /api/tasks/:id    | Update task       |
 | DELETE | /api/tasks/:id    | Delete task       |
 | GET    | /api/habits       | List habits       |
 | POST   | /api/habits       | Create habit      |
-| PATCH  | /api/habits/:id   | Update habit      |
+| PUT    | /api/habits/:id   | Update habit      |
 | DELETE | /api/habits/:id   | Delete habit      |
 | GET    | /api/notes        | List notes        |
 | POST   | /api/notes        | Create note       |
-| PATCH  | /api/notes/:id    | Update note       |
+| PUT    | /api/notes/:id    | Update note       |
 | DELETE | /api/notes/:id    | Delete note       |
 | GET    | /health           | Health check      |
 

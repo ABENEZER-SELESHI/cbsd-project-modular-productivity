@@ -3,10 +3,10 @@ const ctrl = require('../controllers/habitController');
 
 const router = Router();
 
-router.get('/', ctrl.index);
-router.get('/:id', ctrl.show);
-router.post('/', ctrl.create);
-router.patch('/:id', ctrl.update);
+router.get('/',     ctrl.index);
+router.get('/:id',  ctrl.show);
+router.post('/',    ctrl.create);
+router.put('/:id',  ctrl.update);   // PUT replaces PATCH
 router.delete('/:id', ctrl.destroy);
 
 module.exports = router;

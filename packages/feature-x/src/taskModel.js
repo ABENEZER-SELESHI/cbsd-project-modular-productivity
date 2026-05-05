@@ -1,4 +1,4 @@
-const { randomUUID } = require('crypto');
+const { generateId } = require('@repo/utils');
 
 /**
  * Create a new Task object.
@@ -8,7 +8,7 @@ const { randomUUID } = require('crypto');
  */
 function createTask(title, description = '') {
   return {
-    id: randomUUID(),
+    id: generateId(),
     title,
     description,
     completed: false,
