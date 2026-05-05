@@ -32,9 +32,14 @@ export default function HomePage() {
 
   return (
     <main style={{ maxWidth: '720px', margin: '0 auto' }}>
-      <h1 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '1.5rem' }}>
-        Monorepo Dashboard
-      </h1>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem' }}>
+        <h1 style={{ fontSize: '1.5rem', fontWeight: 700, margin: 0 }}>
+          Monorepo Dashboard
+        </h1>
+        <a href="/ui-demo" style={{ fontSize: '0.875rem', color: '#2563eb', textDecoration: 'none' }}>
+          → UI Component Demo
+        </a>
+      </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
         {/* Task Manager */}

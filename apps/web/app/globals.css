@@ -1,0 +1,111 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+/* Tailwind v4: scan workspace packages for class names */
+@source "../../packages/ui-components/src";
+
+/* ─── Design Tokens ─────────────────────────────────────────── */
+:root {
+  --font-sans: 'Inter', system-ui, sans-serif;
+
+  /* Brand palette */
+  --color-primary:        220 100% 60%;   /* hsl(220,100%,60%) – electric blue  */
+  --color-primary-light:  220 100% 70%;
+  --color-accent:         270 80%  65%;   /* violet */
+  --color-accent-light:   300 80%  65%;   /* pink   */
+
+  /* Surface */
+  --color-bg:             222 28%  8%;
+  --color-surface:        222 25% 12%;
+  --color-surface-raised: 222 22% 16%;
+  --color-border:         222 20% 20%;
+
+  /* Text */
+  --color-text:           0 0% 96%;
+  --color-muted:          220 12% 55%;
+}
+
+/* ─── Base ──────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-sans);
+  background-color: hsl(var(--color-bg));
+  color: hsl(var(--color-text));
+  -webkit-font-smoothing: antialiased;
+  min-height: 100svh;
+}
+
+/* ─── Scrollbar ─────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: hsl(var(--color-bg)); }
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--color-border));
+  border-radius: 99px;
+}
+::-webkit-scrollbar-thumb:hover { background: hsl(var(--color-muted)); }
+
+/* ─── Utility: gradient text ────────────────────────────────── */
+.gradient-text {
+  background: linear-gradient(
+    135deg,
+    hsl(var(--color-primary-light)),
+    hsl(var(--color-accent-light))
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ─── Utility: glass surface ────────────────────────────────── */
+.glass {
+  background: hsla(222, 25%, 14%, 0.75);
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  border: 1px solid hsl(var(--color-border));
+}
+
+/* ─── Utility: glow ring ────────────────────────────────────── */
+.glow-ring:focus-visible {
+  outline: 2px solid hsl(var(--color-primary));
+  outline-offset: 2px;
+}
+
+/* ─── Keyframes ─────────────────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.92); }
+  to   { opacity: 1; transform: scale(1);    }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.animate-fade-up    { animation: fadeUp    0.35s ease both; }
+.animate-scale-in   { animation: scaleIn   0.25s ease both; }
+.animate-slide-down { animation: slideDown 0.2s  ease both; }
+.animate-spin       { animation: spin      0.8s  linear infinite; }
+.animate-float      { animation: float     6s    ease-in-out infinite; }
+.animate-pulse-glow { animation: pulseGlow 3s    ease-in-out infinite; }
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-12px); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.15; }
+  50%       { opacity: 0.30; }
+}

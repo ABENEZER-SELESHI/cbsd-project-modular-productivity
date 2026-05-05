@@ -1,12 +1,14 @@
+import './globals.css';
+
 export const metadata = {
-  title: 'Monorepo App',
-  description: 'Task Manager & Habit Tracker',
+  title: 'DesignKit — UI Component Library',
+  description: 'A premium, dark-first component library built for monorepos. Fully typed and accessible.',
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body style={{ fontFamily: 'system-ui, sans-serif', margin: 0, padding: '2rem', background: '#f9fafb' }}>
+      <body style={{ margin: 0, background: 'hsl(222,28%,8%)' }}>
         {children}
       </body>
     </html>
