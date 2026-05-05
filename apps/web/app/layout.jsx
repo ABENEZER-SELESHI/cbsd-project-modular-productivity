@@ -1,8 +1,8 @@
 import './globals.css';
 
 export const metadata = {
-  title: 'DesignKit — UI Component Library',
-  description: 'A premium, dark-first component library built for monorepos. Fully typed and accessible.',
+  title: 'Productivity Hub',
+  description: 'A full-stack monorepo app for managing tasks, habits, and notes.',
 };
 
 export default function RootLayout({ children }) {

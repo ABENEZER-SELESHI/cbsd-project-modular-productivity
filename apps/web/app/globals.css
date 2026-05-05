@@ -99,6 +99,16 @@ body {
 .animate-spin       { animation: spin      0.8s  linear infinite; }
 .animate-float      { animation: float     6s    ease-in-out infinite; }
 .animate-pulse-glow { animation: pulseGlow 3s    ease-in-out infinite; }
+.animate-pulse      { animation: skeletonPulse 1.6s ease-in-out infinite; }
+
+/* ─── Spinner utility ───────────────────────────────────────────── */
+.spinner {
+  width: 16px; height: 16px; border-radius: 50%;
+  border: 2px solid hsl(220,20%,22%);
+  border-top-color: hsl(220,100%,62%);
+  animation: spin 0.7s linear infinite;
+  display: inline-block; flex-shrink: 0;
+}
 
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
@@ -108,4 +118,9 @@ body {
 @keyframes pulseGlow {
   0%, 100% { opacity: 0.15; }
   50%       { opacity: 0.30; }
+}
+
+@keyframes skeletonPulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
 }

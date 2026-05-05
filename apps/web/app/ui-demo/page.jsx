@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState } from 'react';
 import { Button, Card, Input, Modal, Navbar } from '@repo/ui-components';
@@ -47,9 +47,8 @@ const EyeIcon = () => (
 );
 
 /* ── Badge ──────────────────────────────────────────────────────── */
-type BadgeColor = 'blue' | 'violet' | 'green' | 'amber' | 'rose';
-function Badge({ children, color = 'blue' }: { children: React.ReactNode; color?: BadgeColor }) {
-  const map: Record<BadgeColor, string> = {
+function Badge({ children, color = 'blue' }) {
+  const map = {
     blue:   'bg-blue-500/15   text-blue-400   border-blue-500/25',
     violet: 'bg-violet-500/15 text-violet-400 border-violet-500/25',
     green:  'bg-emerald-500/15 text-emerald-400 border-emerald-500/25',
@@ -64,7 +63,7 @@ function Badge({ children, color = 'blue' }: { children: React.ReactNode; color?
 }
 
 /* ── Section divider ────────────────────────────────────────────── */
-function SectionLabel({ id, label, count }: { id: string; label: string; count?: string }) {
+function SectionLabel({ id, label, count }) {
   return (
     <div id={id} className="flex items-center gap-4 pt-2">
       <span className="h-px flex-1 bg-gradient-to-r from-white/10 to-transparent" />
@@ -77,7 +76,7 @@ function SectionLabel({ id, label, count }: { id: string; label: string; count?:
   );
 }
 
-/* ── Sidebar nav item ───────────────────────────────────────────── */
+/* ── Sidebar nav items ──────────────────────────────────────────── */
 const navItems = [
   { id: 'button', label: 'Button', emoji: '🔘' },
   { id: 'input',  label: 'Input',  emoji: '✏️'  },
@@ -99,7 +98,7 @@ export default function UIDemoPage() {
     setTimeout(() => setLoading(false), 2000);
   };
 
-  const scrollTo = (id: string) => {
+  const scrollTo = (id) => {
     setActiveSection(id);
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
@@ -110,9 +109,9 @@ export default function UIDemoPage() {
       <Navbar
         brand="DesignKit"
         links={[
-          { label: 'Home',    href: '/' },
-          { label: 'UI Demo', href: '/ui-demo', active: true },
-          { label: 'Docs',    href: '#' },
+          { label: 'Home',     href: '/' },
+          { label: 'Schedule', href: '/schedule' },
+          { label: 'UI Demo',  href: '/ui-demo', active: true },
         ]}
         sticky
         actions={
@@ -125,7 +124,6 @@ export default function UIDemoPage() {
 
       {/* ── Hero ───────────────────────────────────────────────── */}
       <div className="relative overflow-hidden px-4 pt-20 pb-16 text-center">
-        {/* Ambient blobs */}
         <div
           className="animate-pulse-glow pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 h-[700px] w-[700px] rounded-full blur-3xl"
           style={{ background: 'radial-gradient(circle, hsl(220,100%,55%), transparent 65%)' }}
@@ -169,10 +167,9 @@ export default function UIDemoPage() {
             <Button size="lg" variant="secondary">View source</Button>
           </div>
 
-          {/* Stats */}
           <div className="mt-14 flex flex-wrap items-center justify-center gap-10">
             {[
-              { value: '5',    label: 'Components' },
+              { value: '5',    label: 'Components'  },
               { value: '100%', label: 'TypeScript'  },
               { value: 'A11y', label: 'Accessible'  },
               { value: '0',    label: 'Dependencies' },
@@ -324,19 +321,18 @@ export default function UIDemoPage() {
             <SectionLabel id="card" label="Card" count="4 variants" />
 
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {([
-                { variant: 'default',  badge: <Badge>v1</Badge>,                 label: 'Default',  desc: 'Standard dark surface with subtle border.' },
-                { variant: 'glass',    badge: <Badge color="violet">New</Badge>,  label: 'Glass',    desc: 'Frosted glass with blur backdrop.' },
-                { variant: 'outline',  badge: <Badge color="amber">Beta</Badge>,  label: 'Outline',  desc: 'Transparent with glowing blue border.' },
-                { variant: 'elevated', badge: <Badge color="green">Pro</Badge>,   label: 'Elevated', desc: 'Deep shadow with raised surface feel.' },
-              ] as const).map(({ variant, badge, label, desc }) => (
+              {[
+                { variant: 'default',  badge: <Badge>v1</Badge>,                label: 'Default',  desc: 'Standard dark surface with subtle border.' },
+                { variant: 'glass',    badge: <Badge color="violet">New</Badge>, label: 'Glass',    desc: 'Frosted glass with blur backdrop.' },
+                { variant: 'outline',  badge: <Badge color="amber">Beta</Badge>, label: 'Outline',  desc: 'Transparent with glowing blue border.' },
+                { variant: 'elevated', badge: <Badge color="green">Pro</Badge>,  label: 'Elevated', desc: 'Deep shadow with raised surface feel.' },
+              ].map(({ variant, badge, label, desc }) => (
                 <Card key={variant} variant={variant} hoverable title={label} titleAdornment={badge}>
                   <p className="text-sm text-[hsl(220,12%,55%)] leading-relaxed">{desc}</p>
                 </Card>
               ))}
             </div>
 
-            {/* Feature card */}
             <Card
               variant="glass"
               title="Rich card with footer"
@@ -381,7 +377,6 @@ export default function UIDemoPage() {
               </div>
             </Card>
 
-            {/* Info modal */}
             <Modal
               open={modalOpen}
               onClose={() => setModalOpen(false)}
@@ -411,7 +406,6 @@ export default function UIDemoPage() {
               </ul>
             </Modal>
 
-            {/* Delete confirmation modal */}
             <Modal
               open={deleteModalOpen}
               onClose={() => setDeleteModalOpen(false)}

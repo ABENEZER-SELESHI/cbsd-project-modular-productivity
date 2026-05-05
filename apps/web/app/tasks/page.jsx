@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Button, Input } from '@repo/ui-components';
 import { apiRequest, formatDate, capitalize } from '@repo/utils';
 
@@ -42,6 +42,34 @@ const IcoPlus = () => (
     <path d="M8 3v10M3 8h10" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
   </svg>
 );
+
+/* ─── Error banner ──────────────────────────────────────────────── */
+function ErrorBanner({ message, onRetry, onDismiss }) {
+  return (
+    <div style={{
+      display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16,
+      borderRadius: 12, padding: '11px 14px', fontSize: '0.8125rem',
+      background: 'hsla(0,72%,51%,0.1)', border: '1px solid hsla(0,72%,51%,0.3)',
+      color: 'hsl(0,82%,72%)',
+    }}>
+      <svg viewBox="0 0 20 20" fill="currentColor" width="15" height="15" style={{ flexShrink: 0 }}>
+        <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-5a.75.75 0 01.75.75v4.5a.75.75 0 01-1.5 0v-4.5A.75.75 0 0110 5zm0 10a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd"/>
+      </svg>
+      <span style={{ flex: 1 }}>{message}</span>
+      {onRetry && (
+        <button onClick={onRetry} style={{
+          padding: '3px 9px', borderRadius: 6, border: '1px solid hsla(0,72%,51%,0.4)',
+          background: 'hsla(0,72%,51%,0.15)', color: 'hsl(0,82%,72%)',
+          fontSize: '0.75rem', fontWeight: 600, cursor: 'pointer',
+        }}>Retry</button>
+      )}
+      <button onClick={onDismiss} style={{
+        background: 'none', border: 'none', cursor: 'pointer',
+        color: 'inherit', opacity: 0.6, fontSize: '1rem', lineHeight: 1, padding: 2,
+      }}>✕</button>
+    </div>
+  );
+}
 
 /* ─── Skeleton loader ────────────────────────────────────────────── */
 const Skeleton = () => (
@@ -201,16 +229,17 @@ export default function TasksPage() {
   const [togglingId, setTogglingId] = useState(null);
   const [deletingId, setDeletingId] = useState(null);
 
-  useEffect(() => { fetchAll(); }, []);
-
-  async function fetchAll() {
+  const fetchAll = useCallback(async () => {
     try {
       setLoading(true);
+      setBanner('');
       const data = await apiRequest(API_BASE);
       setTasks(Array.isArray(data) ? data : []);
     } catch { setBanner('Cannot reach API — is the server running on port 4000?'); }
     finally   { setLoading(false); }
-  }
+  }, []);
+
+  useEffect(() => { fetchAll(); }, [fetchAll]);
 
   async function handleAdd() {
     if (!titleVal.trim()) { setTitleErr('Title is required'); return; }
@@ -278,8 +307,11 @@ export default function TasksPage() {
         {/* Nav */}
         <nav style={{ padding: '0 8px', flex: 1 }}>
           {[
-            { label: 'Dashboard', href: '/',      icon: '⊞', active: false },
-            { label: 'Tasks',     href: '/tasks', icon: '✓', active: true  },
+            { label: 'Dashboard', href: '/',          icon: '⊞', active: false },
+            { label: 'Tasks',     href: '/tasks',     icon: '✓', active: true  },
+            { label: 'Habits',    href: '/habits',    icon: '◉', active: false },
+            { label: 'Schedule',  href: '/schedule',  icon: '📅', active: false },
+            { label: 'UI Demo',   href: '/ui-demo',   icon: '⬡', active: false },
           ].map(n => (
             <a key={n.label} href={n.href} style={{
               display: 'flex', alignItems: 'center', gap: 9,
@@ -323,7 +355,8 @@ export default function TasksPage() {
           <h1 style={{ margin: 0, fontSize: '1rem', fontWeight: 700, color: 'hsl(0,0%,92%)' }}>
             Task Manager
           </h1>
-          <div style={{ display: 'flex', gap: 6, marginLeft: 'auto' }}>
+          <div style={{ display: 'flex', gap: 6, marginLeft: 'auto', alignItems: 'center' }}>
+            {loading && <span className="spinner" />}
             {[
               { label: 'Total',  val: total,         color: 'hsl(220,100%,65%)' },
               { label: 'Active', val: active.length, color: 'hsl(38,92%,58%)'   },
@@ -349,15 +382,11 @@ export default function TasksPage() {
 
             {/* Error banner */}
             {banner && (
-              <div className="animate-scale-in" style={{
-                display: 'flex', alignItems: 'center', gap: 8, marginBottom: 16,
-                borderRadius: 10, padding: '9px 14px', fontSize: '0.8125rem',
-                background: 'hsla(0,72%,51%,0.12)', border: '1px solid hsla(0,72%,51%,0.28)',
-                color: 'hsl(0,82%,72%)',
-              }}>
-                <span style={{ flex: 1 }}>{banner}</span>
-                <button onClick={() => setBanner('')} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'inherit', opacity: 0.7, fontSize: '1rem' }}>✕</button>
-              </div>
+              <ErrorBanner
+                message={banner}
+                onRetry={fetchAll}
+                onDismiss={() => setBanner('')}
+              />
             )}
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14, alignItems: 'start' }}>
